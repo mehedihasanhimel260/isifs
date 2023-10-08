@@ -275,8 +275,11 @@ Route::get('/test', function () {
 // Route::get('/admin/supplier/management/edit', function () {
 //     return view('admin-views.supplier-management.edit');
 // });
+Route::get('admin/supplier/management/{id}/show', 'SupplierManagementController@show')->name('admin.supplier.management.show')->middleware('admin');
 Route::get('admin/supplier/management', 'SupplierManagementController@index')->name('admin.supplier.management.index')->middleware('admin');
 Route::get('admin/supplier/management/create', 'SupplierManagementController@create')->name('admin.supplier.management.create')->middleware('admin');
 Route::post('admin/supplier/management', 'SupplierManagementController@store')->name('admin.supplier.management.store')->middleware('admin');
 Route::get('admin/supplier/management/{id}/edit', 'SupplierManagementController@edit')->name('admin.supplier.management.edit')->middleware('admin');
 Route::post('admin/supplier/management/{id}', 'SupplierManagementController@update')->name('admin.supplier.management.update')->middleware('admin');
+// Route::get('/admin/product/add-new/{supplierId}', 'SupplierManagementController@getPreviousDue');
+Route::get('admin/supplier/management/update', 'SupplierManagementController@receptupdate')->name('admin.supplier.management.receptupdate')->middleware('admin');

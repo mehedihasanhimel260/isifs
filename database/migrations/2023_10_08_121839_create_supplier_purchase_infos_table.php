@@ -16,8 +16,8 @@ class CreateSupplierPurchaseInfosTable extends Migration
         Schema::create('supplier_purchase_infos', function (Blueprint $table) {
             $table->id();
             $table->string('supplier_id');
-            $table->string('total_purchase');
-            $table->string('make_pay');
+            $table->string('total_purchase')->nullable();
+            $table->string('make_pay')->nullable();
             $table->timestamps();
         });
     }

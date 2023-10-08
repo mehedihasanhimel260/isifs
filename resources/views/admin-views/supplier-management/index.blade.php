@@ -71,8 +71,15 @@
 								<td>{{ $supplierlist->address }}</td>
 								<td>
 									<div class="d-flex justify-content-center">
-										<a href="{{route('admin.supplier.management.edit', $supplierlist->id)}}" class="btn btn-outline--primary btn-sm square-btn" title="{{\App\CPU\translate('Edit')}}">
+
+										<a href="{{route('admin.supplier.management.edit', $supplierlist->id)}}" class="btn btn-outline--primary btn-sm square-btn mr-2" title="{{\App\CPU\translate('Edit')}}">
 											<i class="tio-edit"></i>
+										</a>
+										<a href="{{route('admin.supplier.management.recept', $supplierlist->id)}}" class="btn btn-outline--primary btn-sm square-btn mr-2" title="{{\App\CPU\translate('Receipt')}}">
+											<i class="tio-receipt"></i>
+										</a>
+										<a href="{{route('admin.supplier.management.show', $supplierlist->id)}}" class="btn btn-outline--primary btn-sm square-btn" title="{{\App\CPU\translate('Transaction')}}">
+											<i class="tio-money"></i>
 										</a>
 									</div>
 								</td>

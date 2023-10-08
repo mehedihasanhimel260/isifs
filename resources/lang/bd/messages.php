@@ -2580,4 +2580,8 @@
   'Payable' => 'Payable',
   'Now Pay' => 'Now Pay',
   'current due' => 'Current due',
+  'Purchase Amount' => 'Purchase Amount',
+  'Receipt' => 'Receipt',
+  'Supplier Transaction' => 'Supplier Transaction',
+  'Pay' => 'Pay',
 );

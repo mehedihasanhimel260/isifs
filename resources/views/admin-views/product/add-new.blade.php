@@ -339,7 +339,7 @@
                                 <div class="row ">
                                     <div class="col-md-6 form-group physical_product_show">
                                         <label class="title-color">{{ \App\CPU\translate('Suplier Name') }}</label>
-                                        <select class="js-example-basic-multiple form-control" name="supplier_id">
+                                        <select class="js-example-basic-multiple form-control" name="supplier_id" onchange="valuesOfAll(this.value)">
                                             @foreach (\App\Model\SupplierManagement::get() as $x)
                                             <option value="{{ $x->id }}">{{ $x->name }}</option>
                                             @endforeach
@@ -352,7 +352,7 @@
                                                 {{ \App\CPU\translate('Total Amount') }}</label>
                                             <input type="number" min="1" value="0" id="totalInput" step="1" readonly name="total_purchase" class="form-control" required>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" hidden>
                                             <label class="title-color">
                                                 {{ \App\CPU\translate('Previous Due') }}</label>
                                             <input type="number" min="1" value="0" id="previousDue" step="1" readonly class="form-control" required>
@@ -367,7 +367,7 @@
                                                 {{ \App\CPU\translate('Now Pay') }}</label>
                                             <input type="number" min="1" id="nowpay" value="0" step="1" name="make_pay" class="form-control" required>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" hidden>
                                             <label class="title-color">
                                                 {{ \App\CPU\translate('current due') }}</label>
                                             <input type="number" min="1" id="currentDue" value="0" step="1" readonly class="form-control" required>

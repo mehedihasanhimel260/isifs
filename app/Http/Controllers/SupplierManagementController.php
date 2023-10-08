@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\SupplierManagement;
+use App\Model\SupplierPurchaseInfo;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -48,9 +49,20 @@ class SupplierManagementController extends Controller
      * @param  \App\SupplierManagement  $supplierManagement
      * @return \Illuminate\Http\Response
      */
-    public function show(SupplierManagement $supplierManagement)
+    public function show(SupplierManagement $supplierManagement, $id)
+
     {
-        //
+
+        $supplierslist = SupplierManagement::find($id);
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        $totalPurchase = $supplierTransactionInfo->sum('total_purchase');
+        $totalPaid = $supplierTransactionInfo->sum('make_pay');
+
+        $previousDue = $totalPurchase - $totalPaid;
+
+
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        return view('admin-views.supplier-management.show', compact('supplierTransactionInfo', 'previousDue', 'supplierslist'));
     }
 
     /**
@@ -90,4 +102,29 @@ class SupplierManagementController extends Controller
     {
         //
     }
+    // public function getPreviousDue(Request $request, $supplierId)
+    // {
+    //     $previous = SupplierPurchaseInfo::where('supplier_id', $supplierId)->get();
+    //     $totalPurchase = 0;
+    //     $totalPaid = 0;
+    //     foreach ($previous as $prevTran) {
+    //         $totalPurchase +=    $prevTran->total_purchase;
+    //         $totalPaid +=  $prevTran->make_pay;
+    //     }
+
+    //     $previousDue =  $totalPurchase - $totalPaid;
+    //     return response()->json(['previous_due' => $previousDue]);
+    // }
+
+    public function recept(Request $request, $id)
+    {
+        $supplierslist = SupplierManagement::find($id);
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        $totalPurchase = $supplierTransactionInfo->sum('total_purchase');
+        $totalPaid = $supplierTransactionInfo->sum('make_pay');
+
+        $previousDue = $totalPurchase - $totalPaid;
+        return view('admin-views.supplier-management.recept', compact('previousDue', 'supplierslist'));
+    }
+
 }
