@@ -200,40 +200,33 @@
                             </div>
                         </div>
 
+
                         <div class="card mt-2 rest-part">
                             <div class="card-header">
                                 <h4 class="mb-0">{{ \App\CPU\translate('Product price & stock') }}</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row align-items-end">
-                                    <div class="col-md-3 form-group physical_product_show">
-                                        <label class="title-color">{{ \App\CPU\translate('Suplier Name') }}</label>
-                                        <select class="js-example-basic-multiple form-control" name="supplier_name">
-                                            @foreach (\App\Model\SupplierManagement::get() as $x)
-                                            <option value="{{ $x->id }}">{{ $x->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-6 form-group">
                                         <label class="title-color">{{ \App\CPU\translate('Unit price') }}</label>
                                         <input type="number" min="0" step="0.01" placeholder="{{ \App\CPU\translate('Unit price') }}" name="unit_price" value="{{ old('unit_price') }}" class="form-control" required>
                                     </div>
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-6 form-group">
                                         <label class="title-color">{{ \App\CPU\translate('Purchase price') }}</label>
                                         <input type="number" min="0" id="amount" step="0.01" placeholder="{{ \App\CPU\translate('Purchase price') }}" value="{{ old('purchase_price') }}" name="purchase_price" class="form-control" required>
                                     </div>
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-4 form-group">
                                         <label class="title-color">{{ \App\CPU\translate('Tax') }}</label>
                                         <label class="text-info">{{ \App\CPU\translate('Percent') }} ( % )</label>
                                         <input type="number" min="0" value="0" step="0.01" placeholder="{{ \App\CPU\translate('Tax') }}" name="tax" value="{{ old('tax') }}" class="form-control">
                                         <input name="tax_type" value="percent" class="d-none">
                                     </div>
 
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-4 form-group">
                                         <label class="title-color">{{ \App\CPU\translate('Discount') }}</label>
                                         <input type="number" min="0" value="0" step="0.01" placeholder="{{ \App\CPU\translate('Discount') }}" name="discount" class="form-control" required>
                                     </div>
-                                    <div class="col-md-3 form-group">
+                                    <div class="col-md-4 form-group">
                                         <label class="title-color">{{ \App\CPU\translate('Discount_Type') }}</label>
                                         <select class="js-example-basic-multiple js-states js-example-responsive demo-select2 w-100" name="discount_type">
                                             <option value="flat">{{ \App\CPU\translate('Flat') }}</option>
@@ -269,15 +262,10 @@
                                             </label>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-3 form-group" id="totalamount">
-                                        <label class="title-color">
-                                            {{ \App\CPU\translate('Total Amount') }}</label>
-                                        <input type="number" min="1" value="0" id="totalInput" step="1" readonly placeholder="{{ \App\CPU\translate('Total Amount') }}" name="minimum_order_qty" class="form-control" required>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="card mt-2 mb-2 rest-part">
                             <div class="card-header">
@@ -343,6 +331,52 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card mt-2 rest-part">
+                            <div class="card-header">
+                                <h4 class="mb-0">{{ \App\CPU\translate('Supplier price & stock') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row ">
+                                    <div class="col-md-6 form-group physical_product_show">
+                                        <label class="title-color">{{ \App\CPU\translate('Suplier Name') }}</label>
+                                        <select class="js-example-basic-multiple form-control" name="supplier_name">
+                                            @foreach (\App\Model\SupplierManagement::get() as $x)
+                                            <option value="{{ $x->id }}">{{ $x->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 form-group" id="totalamount">
+                                        <div class="row">
+                                            <label class="title-color">
+                                                {{ \App\CPU\translate('Total Amount') }}</label>
+                                            <input type="number" min="1" value="0" id="totalInput" step="1" readonly name="minimum_order_qty" class="form-control" required>
+                                        </div>
+                                        <div class="row">
+                                            <label class="title-color">
+                                                {{ \App\CPU\translate('Previous Due') }}</label>
+                                            <input type="number" min="1" value="0" id="previousDue" step="1" readonly name="minimum_order_qty" class="form-control" required>
+                                        </div>
+                                        <div class="row">
+                                            <label class="title-color">
+                                                {{ \App\CPU\translate('Payable') }}</label>
+                                            <input type="number" min="1" value="0" id="payable" step="1" readonly name="minimum_order_qty" class="form-control" required>
+                                        </div>
+                                        <div class="row">
+                                            <label class="title-color">
+                                                {{ \App\CPU\translate('Now Pay') }}</label>
+                                            <input type="number" min="1" id="nowpay" value="0" step="1" name="minimum_order_qty" class="form-control" required>
+                                        </div>
+                                        <div class="row">
+                                            <label class="title-color">
+                                                {{ \App\CPU\translate('current due') }}</label>
+                                            <input type="number" min="1" id="currentDue" value="0" step="1" readonly name="minimum_order_qty" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="row justify-content-end gap-3 mt-3">
                             <button type="reset" class="btn btn-secondary">{{ \App\CPU\translate('reset') }}</button>
@@ -357,20 +391,31 @@
 @push('script')
 {{-- supplier amount calculation start --}}
 <script>
-    
     const amountInput = document.getElementById("amount");
     const quantityInput = document.getElementById("totalquantity");
     const totalInput = document.getElementById("totalInput");
-
+    const previousDueInput = document.getElementById("previousDue");
+    const payableInput = document.getElementById("payable");
+    const nowPayInput = document.getElementById("nowpay");
+    const currentDueInput = document.getElementById("currentDue");
+  
     function updateTotal() {
-      const amount = parseFloat(amountInput.value) || 0; 
-      const totalquantity = parseFloat(quantityInput.value) || 0; 
+      const amount = parseFloat(amountInput.value) || 0;
+      const totalquantity = parseFloat(quantityInput.value) || 0;
       const total = amount * totalquantity;
-      totalInput.value =total.toFixed(2); 
+      totalInput.value = total.valueOf(); // Display total with 2 decimal places
+      const previousDue = parseFloat(previousDueInput.value) || 0;
+      const payable = total - previousDue;
+      payableInput.value = payable.valueOf(); // Display payable with 2 decimal places
+      const nowPay = parseFloat(nowPayInput.value) || 0;
+      const currentDue = payable - nowPay;
+      currentDueInput.value = currentDue.valueOf(); // Display current due with 2 decimal places
     }
-    
+  
     amountInput.addEventListener("input", updateTotal);
     quantityInput.addEventListener("input", updateTotal);
+    previousDueInput.addEventListener("input", updateTotal);
+    nowPayInput.addEventListener("input", updateTotal);
     updateTotal();
 </script>
 {{-- supplier amount calculation end --}}

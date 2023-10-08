@@ -2575,4 +2575,9 @@
   'Supplier' => 'Supplier',
   'Suplier Name' => 'Suplier Name',
   'Total Amount' => 'Total Amount',
+  'Supplier price & stock' => 'Supplier price & stock',
+  'Previous Due' => 'Previous Due',
+  'Payable' => 'Payable',
+  'Now Pay' => 'Now Pay',
+  'current due' => 'Current due',
 );
