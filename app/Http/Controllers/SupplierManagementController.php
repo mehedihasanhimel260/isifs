@@ -102,19 +102,18 @@ class SupplierManagementController extends Controller
     {
         //
     }
-    // public function getPreviousDue(Request $request, $supplierId)
-    // {
-    //     $previous = SupplierPurchaseInfo::where('supplier_id', $supplierId)->get();
-    //     $totalPurchase = 0;
-    //     $totalPaid = 0;
-    //     foreach ($previous as $prevTran) {
-    //         $totalPurchase +=    $prevTran->total_purchase;
-    //         $totalPaid +=  $prevTran->make_pay;
-    //     }
+    public function getSupplierData(Request $request)
+    {
+        $id = $request->input('supplier_id');
 
-    //     $previousDue =  $totalPurchase - $totalPaid;
-    //     return response()->json(['previous_due' => $previousDue]);
-    // }
+        // Retrieve data from the database based on $supplierId
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        $totalPurchase = $supplierTransactionInfo->sum('total_purchase');
+        $totalPaid = $supplierTransactionInfo->sum('make_pay');
+        return response()->json([
+            'previous_due' =>  $totalPurchase - $totalPaid,
+        ]);
+    }
 
     public function recept(Request $request, $id)
     {
@@ -126,5 +125,4 @@ class SupplierManagementController extends Controller
         $previousDue = $totalPurchase - $totalPaid;
         return view('admin-views.supplier-management.recept', compact('previousDue', 'supplierslist'));
     }
-
 }

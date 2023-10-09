@@ -340,6 +340,7 @@
                                     <div class="col-md-6 form-group physical_product_show">
                                         <label class="title-color">{{ \App\CPU\translate('Suplier Name') }}</label>
                                         <select class="js-example-basic-multiple form-control" name="supplier_id" onchange="valuesOfAll(this.value)">
+                                            <option selected> --- select option ---</option>
                                             @foreach (\App\Model\SupplierManagement::get() as $x)
                                             <option value="{{ $x->id }}">{{ $x->name }}</option>
                                             @endforeach
@@ -352,7 +353,7 @@
                                                 {{ \App\CPU\translate('Total Amount') }}</label>
                                             <input type="number" min="1" value="0" id="totalInput" step="1" readonly name="total_purchase" class="form-control" required>
                                         </div>
-                                        <div class="row" hidden>
+                                        <div class="row">
                                             <label class="title-color">
                                                 {{ \App\CPU\translate('Previous Due') }}</label>
                                             <input type="number" min="1" value="0" id="previousDue" step="1" readonly class="form-control" required>
@@ -367,7 +368,7 @@
                                                 {{ \App\CPU\translate('Now Pay') }}</label>
                                             <input type="number" min="1" id="nowpay" value="0" step="1" name="make_pay" class="form-control" required>
                                         </div>
-                                        <div class="row" hidden>
+                                        <div class="row">
                                             <label class="title-color">
                                                 {{ \App\CPU\translate('current due') }}</label>
                                             <input type="number" min="1" id="currentDue" value="0" step="1" readonly class="form-control" required>
@@ -389,8 +390,23 @@
 @endsection
 
 @push('script')
-{{-- supplier amount calculation start --}}
+
 <script>
+    function valuesOfAll(selectedValue) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('getSupplierData') }}", // Replace with the actual route name
+            data: { supplier_id: selectedValue },
+            success: function (data) {
+                $("#previousDue").val(data.previous_due);
+                updateTotal(); // Update the total when previousDue is updated
+            },
+            error: function () {
+                alert("Error fetching data from the server.");
+            }
+        });
+    };
+
     const amountInput = document.getElementById("amount");
     const quantityInput = document.getElementById("totalquantity");
     const totalInput = document.getElementById("totalInput");
@@ -398,20 +414,20 @@
     const payableInput = document.getElementById("payable");
     const nowPayInput = document.getElementById("nowpay");
     const currentDueInput = document.getElementById("currentDue");
-  
+
     function updateTotal() {
-      const amount = parseFloat(amountInput.value) || 0;
-      const totalquantity = parseFloat(quantityInput.value) || 0;
-      const total = amount * totalquantity;
-      totalInput.value = total.valueOf(); // Display total with 2 decimal places
-      const previousDue = parseFloat(previousDueInput.value) || 0;
-      const payable = total - previousDue;
-      payableInput.value = payable.valueOf(); // Display payable with 2 decimal places
-      const nowPay = parseFloat(nowPayInput.value) || 0;
-      const currentDue = payable - nowPay;
-      currentDueInput.value = currentDue.valueOf(); // Display current due with 2 decimal places
+        const amount = parseFloat(amountInput.value) || 0;
+        const totalquantity = parseFloat(quantityInput.value) || 0;
+        const total = amount * totalquantity;
+        totalInput.value = total.valueOf(); // Display total with 2 decimal places
+        const previousDue = parseFloat(previousDueInput.value) || 0;
+        const payable = total + previousDue;
+        payableInput.value = payable.valueOf(); // Display payable with 2 decimal places
+        const nowPay = parseFloat(nowPayInput.value) || 0;
+        const currentDue = payable - nowPay;
+        currentDueInput.value = currentDue.valueOf(); // Display current due with 2 decimal places
     }
-  
+
     amountInput.addEventListener("input", updateTotal);
     quantityInput.addEventListener("input", updateTotal);
     previousDueInput.addEventListener("input", updateTotal);

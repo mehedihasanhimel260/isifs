@@ -283,3 +283,4 @@ Route::get('admin/supplier/management/{id}/edit', 'SupplierManagementController@
 Route::post('admin/supplier/management/{id}', 'SupplierManagementController@update')->name('admin.supplier.management.update')->middleware('admin');
 // Route::get('/admin/product/add-new/{supplierId}', 'SupplierManagementController@getPreviousDue');
 Route::get('admin/supplier/management/update', 'SupplierManagementController@receptupdate')->name('admin.supplier.management.receptupdate')->middleware('admin');
+Route::get('/get-supplier-data', 'SupplierManagementController@getSupplierData')->name('getSupplierData')->middleware('admin');
