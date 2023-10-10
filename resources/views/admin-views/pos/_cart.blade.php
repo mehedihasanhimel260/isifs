@@ -163,7 +163,7 @@
             </ul>
         </div>
         <div class="form-group d-flex ">
-            <select class="form-control form-ellipsis" id='customer' name="referral_id">
+            <select class="form-control form-ellipsis mr-3 " id='referral_member' name="referral_id">
                 <option value="">{{ \App\CPU\translate('Walk In referral') }}</option>
                 @foreach (\App\Model\ReferralMember::get() as $k)
                 <option value="{{ $k->id }}">{{ \App\CPU\translate($k->name) }} {{ $k->phone }}</option>
@@ -172,6 +172,18 @@
             <button class="btn btn-success rounded text-nowrap" id="add_new_referral_member" type="button" data-toggle="modal" data-target="#add-referral_member" title="Add Referral">
                 <i class="tio-add"></i>
                 {{ \App\CPU\translate('referral_member') }}
+            </button>
+        </div>
+        <div class="form-group d-flex ">
+            <select class="form-control form-ellipsis mr-3" id='social_referral_member' name="social_referral_id">
+                <option value="">{{ \App\CPU\translate('Walk In referral') }}</option>
+                @foreach (\App\Model\SocialReferralMember::get() as $k)
+                <option value="{{ $k->id }}">{{ \App\CPU\translate($k->name) }} {{ $k->phone }}</option>
+                @endforeach
+            </select>
+            <button class="btn btn-success rounded text-nowrap" id="customer" type="button" data-toggle="modal" data-target="#add_social_referral_member" title="Social member">
+                <i class="tio-add"></i>
+                {{ \App\CPU\translate('Social member') }}
             </button>
         </div>
         <div class="d-flex gap-2 justify-content-between align-items-center pt-3">
@@ -296,6 +308,9 @@
 </div>
 
 <script>
+    $('#referral_member').select2();
+    $('#social_referral_member').select2();
+
     $('#type_ext_dis').on('change', function (){
         let type = $('#type_ext_dis').val();
         if(type === 'amount'){

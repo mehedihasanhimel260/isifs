@@ -525,6 +525,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
             Route::post('customer-store', 'POSController@customer_store')->name('customer-store');
             Route::post('referral-member-store', 'POSController@referral_member_store')->name('referral.member.store');
+            Route::post('social-referral-member-store', 'POSController@social_referral_member_store')->name('social.referral.member.store');
             Route::post('get-referral-member', 'POSController@get_referral_member')->name('getReferralMember');
         });
 

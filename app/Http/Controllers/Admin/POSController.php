@@ -19,6 +19,8 @@ use App\Model\OrderDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\CPU\BackEndHelper;
+use App\Model\SocialReferralMember;
+use App\Model\SocialReferralMemberInfo;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class POSController extends Controller
@@ -816,6 +818,14 @@ class POSController extends Controller
             ]);
         }
 
+        if (isset($request->social_referral_id)) {
+            SocialReferralMemberInfo::create([
+                'referral_id' => $request->social_referral_id,
+                'order_id' => $order_id,
+                'quntity' => $total_quantity,
+            ]);
+        }
+
 
 
 
@@ -974,6 +984,23 @@ class POSController extends Controller
             'address' => $request['address'],
         ]);
         Toastr::success(\App\CPU\translate('Referral added successfully'));
+        return back();
+    }
+    public function social_referral_member_store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone' => 'unique:users',
+            'address' => 'required',
+        ]);
+        SocialReferralMember::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'address' => $request['address'],
+        ]);
+        Toastr::success(\App\CPU\translate('Social Referral added successfully'));
         return back();
     }
     public function get_referral_member(Request $request)

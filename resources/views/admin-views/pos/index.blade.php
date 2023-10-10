@@ -260,6 +260,54 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="add_social_referral_member" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{\App\CPU\translate('add_new_referral_member')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('admin.pos.social.referral.member.store')}}" method="post">
+                    @csrf
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('Name')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="{{\App\CPU\translate('Name')}}" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('address')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="{{\App\CPU\translate('address')}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('email')}}</label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="{{\App\CPU\translate('Ex')}}: ex@example.com">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('phone')}}<span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="{{\App\CPU\translate('phone')}}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <button type="submit" id="submit_new_referral_member" class="btn btn--primary">{{\App\CPU\translate('submit')}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 

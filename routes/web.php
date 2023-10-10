@@ -287,7 +287,12 @@ Route::get('/get-supplier-data', 'SupplierManagementController@getSupplierData')
 
 Route::get('admin/referral/management', 'ReferralMemberController@index')->name('admin.referral.management.index')->middleware('admin');
 Route::get('admin/referral/management/{id}/edit', 'ReferralMemberController@edit')->name('admin.referral.management.edit')->middleware('admin');
-
 Route::post('admin/referral/management/{id}', 'ReferralMemberController@update')->name('admin.referral.management.update')->middleware('admin');
-
 Route::get('admin/referral/management/{id}/show', 'ReferralMemberController@show')->name('admin.referral.management.show')->middleware('admin');
+
+
+
+Route::get('admin/social/referral/management', 'SocialReferralMemberController@index')->name('admin.social.referral.management.index')->middleware('admin');
+Route::get('admin/social/referral/management/{id}/edit', 'SocialReferralMemberController@edit')->name('admin.social.referral.management.edit')->middleware('admin');
+Route::post('admin/social/referral/management/{id}', 'SocialReferralMemberController@update')->name('admin.social.referral.management.update')->middleware('admin');
+Route::get('admin/social/referral/management/{id}/show', 'SocialReferralMemberController@show')->name('admin.social.referral.management.show')->middleware('admin');
