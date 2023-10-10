@@ -164,7 +164,7 @@ class POSController extends Controller
                 $query->whereJsonContains('category_ids', [[['id' => (string)$request['category_id']]]]);
             })->where(function ($q) use ($key) {
                 foreach ($key as $value) {
-                    $q->where('name', 'like', "%{$value}%");
+                    $q->where('name', 'like', "%{$value}%")->orWhere('code', 'like', "%{$value}%");
                 }
             })->paginate(6);
 
