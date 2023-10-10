@@ -3,231 +3,271 @@
 @section('title', \App\CPU\translate('POS'))
 @section('content')
 <!-- Content -->
-	<!-- ========================= SECTION CONTENT ========================= -->
-	<section class="section-content pt-5">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-7 mb-4 mb-lg-0">
-                    <div class="card">
-                        <h5 class="p-3 m-0 bg-light">{{\App\CPU\translate('Product_Section')}}</h5>
-                        <div class="px-3 py-4">
-                            <div class="row gy-1">
-                                <div class="col-sm-6">
-                                    <div class="input-group d-flex justify-content-end" >
-                                        <select name="category" id="category" class="form-control js-select2-custom w-100" title="select category" onchange="set_category_filter(this.value)">
-                                            <option value="">{{\App\CPU\translate('All Categories')}}</option>
-                                            @foreach ($categories as $item)
-                                            <option value="{{$item->id}}" {{$category==$item->id?'selected':''}}>{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content pt-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <div class="card">
+                    <h5 class="p-3 m-0 bg-light">{{\App\CPU\translate('Product_Section')}}</h5>
+                    <div class="px-3 py-4">
+                        <div class="row gy-1">
+                            <div class="col-sm-6">
+                                <div class="input-group d-flex justify-content-end">
+                                    <select name="category" id="category" class="form-control js-select2-custom w-100" title="select category" onchange="set_category_filter(this.value)">
+                                        <option value="">{{\App\CPU\translate('All Categories')}}</option>
+                                        @foreach ($categories as $item)
+                                        <option value="{{$item->id}}" {{$category==$item->id?'selected':''}}>{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-sm-6">
-                                    <form class="">
-                                        <!-- Search -->
-                                        <div class="input-group-overlay input-group-merge input-group-custom">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="tio-search"></i>
-                                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <form class="">
+                                    <!-- Search -->
+                                    <div class="input-group-overlay input-group-merge input-group-custom">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="tio-search"></i>
                                             </div>
-                                            <input id="search" autocomplete="off" type="text" value="{{$keyword?$keyword:''}}"
-                                                    name="search" class="form-control search-bar-input" placeholder="{{\App\CPU\translate('Search by Name')}}"
-                                                    aria-label="Search here">
-                                            <diV class="card pos-search-card w-4 position-absolute z-index-1 w-100">
-                                                <div id="pos-search-box" class="card-body search-result-box d--none"></div>
-                                            </diV>
                                         </div>
-                                        <!-- End Search -->
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pt-2" id="items">
-                            <div class="pos-item-wrap">
-                                @foreach($products as $product)
-                                    @include('admin-views.pos._single_product',['product'=>$product])
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div class="table-responsive mt-4">
-                            <div class="px-4 d-flex justify-content-lg-end">
-                                <!-- Pagination -->
-                                {!!$products->withQueryString()->links()!!}
+                                        <input id="search" autocomplete="off" type="text" value="{{$keyword?$keyword:''}}" name="search" class="form-control search-bar-input" placeholder="{{\App\CPU\translate('Search by Name')}}" aria-label="Search here">
+                                        <diV class="card pos-search-card w-4 position-absolute z-index-1 w-100">
+                                            <div id="pos-search-box" class="card-body search-result-box d--none"></div>
+                                        </diV>
+                                    </div>
+                                    <!-- End Search -->
+                                </form>
                             </div>
                         </div>
                     </div>
-				</div>
-				<div class="col-lg-5 mb-5">
-                    <div class="card billing-section-wrap">
-                        <h5 class="p-3 m-0 bg-light">{{\App\CPU\translate('Billing_Section')}}</h5>
-                        <div class="card-body">
-                            <div class="form-group d-flex gap-2">
-                                <select onchange="customer_change(this.value);" id='customer' name="customer_id" data-placeholder="Walk In Customer" class="js-data-example-ajax form-control form-ellipsis">
-                                    <option value="0">{{\App\CPU\translate('walking_customer')}}</option>
-                                </select>
-                                <button class="btn btn-success rounded text-nowrap" id="add_new_customer" type="button" data-toggle="modal" data-target="#add-customer" title="Add Customer">
-                                    <i class="tio-add"></i>
-                                    {{ \App\CPU\translate('customer')}}
-                                </button>
-                            </div>
-                            <div class="form-group">
-                                <label class="text-capitalize title-color d-flex align-items-center flex-wrap gap-1">
-                                    {{\App\CPU\translate('current_customer')}} :
-                                    <span class="mb-0" id="current_customer"></span>
-                                </label>
-                            </div>
-                            <div class="d-flex gap-2 flex-wrap flex-sm-nowrap mb-3">
-                                <select id='cart_id' name="cart_id" class=" form-control js-select2-custom" onchange="cart_change(this.value);">
-                                </select>
-                                <a class="btn btn-secondary rounded text-nowrap" onclick="clear_cart()">
-                                    {{ \App\CPU\translate('clear_cart')}}
-                                </a>
-                                <a class="btn btn-info rounded text-nowrap" onclick="new_order()">
-                                    {{ \App\CPU\translate('new_order')}}
-                                </a>
-                            </div>
-                            <div id="cart" class="pb-5">
-                                @include('admin-views.pos._cart',['cart_id'=>$cart_id])
-                            </div>
+                    <div class="card-body pt-2" id="items">
+                        <div class="pos-item-wrap">
+                            @foreach($products as $product)
+                            @include('admin-views.pos._single_product',['product'=>$product])
+                            @endforeach
                         </div>
                     </div>
-				</div>
-			</div>
-		</div><!-- container //  -->
-	</section>
 
-    <!-- End Content -->
-    <div class="modal fade pt-5" id="quick-view" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="quick-view-modal">
+                    <div class="table-responsive mt-4">
+                        <div class="px-4 d-flex justify-content-lg-end">
+                            <!-- Pagination -->
+                            {!!$products->withQueryString()->links()!!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 mb-5">
+                <div class="card billing-section-wrap">
+                    <h5 class="p-3 m-0 bg-light">{{\App\CPU\translate('Billing_Section')}}</h5>
+                    <div class="card-body">
+                        <div class="form-group d-flex gap-2">
+                            <select onchange="customer_change(this.value);" id='customer' name="customer_id" data-placeholder="Walk In Customer" class="js-data-example-ajax form-control form-ellipsis">
 
+                                <option value="0">{{\App\CPU\translate('walking_customer')}}</option>
+
+                            </select>
+                            <button class="btn btn-success rounded text-nowrap" id="add_new_customer" type="button" data-toggle="modal" data-target="#add-customer" title="Add Customer">
+                                <i class="tio-add"></i>
+                                {{ \App\CPU\translate('customer')}}
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-capitalize title-color d-flex align-items-center flex-wrap gap-1">
+                                {{\App\CPU\translate('current_customer')}} :
+                                <span class="mb-0" id="current_customer"></span>
+                            </label>
+                        </div>
+
+                        <div class="d-flex gap-2 flex-wrap flex-sm-nowrap mb-3">
+                            <select id='cart_id' name="cart_id" class=" form-control js-select2-custom" onchange="cart_change(this.value);">
+                            </select>
+                            <a class="btn btn-secondary rounded text-nowrap" onclick="clear_cart()">
+                                {{ \App\CPU\translate('clear_cart')}}
+                            </a>
+                            <a class="btn btn-info rounded text-nowrap" onclick="new_order()">
+                                {{ \App\CPU\translate('new_order')}}
+                            </a>
+                        </div>
+                        <div id="cart" class="pb-5">
+                            @include('admin-views.pos._cart',['cart_id'=>$cart_id])
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </div><!-- container //  -->
+</section>
 
-    @php($order=\App\Model\Order::find(session('last_order')))
-    @if($order)
-    @php(session(['last_order'=> false]))
-    <div class="modal fade py-5" id="print-invoice" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{\App\CPU\translate('Print Invoice')}}</h5>
-                    <button id="invoice_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+<!-- End Content -->
+<div class="modal fade pt-5" id="quick-view" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="quick-view-modal">
+
+        </div>
+    </div>
+</div>
+
+@php($order=\App\Model\Order::find(session('last_order')))
+@if($order)
+@php(session(['last_order'=> false]))
+<div class="modal fade py-5" id="print-invoice" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{\App\CPU\translate('Print Invoice')}}</h5>
+                <button id="invoice_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                    </button>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12">
+                    <center>
+                        <input id="print_invoice" type="button" class="btn btn--primary non-printable" onclick="printDiv('printableArea')" value="{{\App\CPU\translate('proceed')}}, {{\App\CPU\translate('if_thermal_printer_is_ready')}}" />
+                        <a href="{{url()->previous()}}" class="btn btn-danger non-printable">{{\App\CPU\translate('Back')}}</a>
+                    </center>
+                    <hr class="non-printable">
                 </div>
-                <div class="modal-body row">
-                    <div class="col-md-12">
-                        <center>
-                            <input id="print_invoice" type="button" class="btn btn--primary non-printable" onclick="printDiv('printableArea')"
-                                value="{{\App\CPU\translate('proceed')}}, {{\App\CPU\translate('if_thermal_printer_is_ready')}}"/>
-                            <a href="{{url()->previous()}}" class="btn btn-danger non-printable">{{\App\CPU\translate('Back')}}</a>
-                        </center>
-                        <hr class="non-printable">
-                    </div>
-                    <div class="row m-auto" id="printableArea">
-                        @include('admin-views.pos.order.invoice')
-                    </div>
+                <div class="row m-auto" id="printableArea">
+                    @include('admin-views.pos.order.invoice')
+                </div>
 
-                </div>
             </div>
         </div>
     </div>
-    @endif
+</div>
+@endif
 
-    <div class="modal fade" id="add-customer" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{\App\CPU\translate('add_new_customer')}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('admin.pos.customer-store')}}" method="post" id="product_form"
-                          >
-                        @csrf
-                            <div class="row pl-2" >
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label" >{{\App\CPU\translate('first_name')}} <span
-                                                class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text" name="f_name" class="form-control" value="{{ old('f_name') }}"  placeholder="{{\App\CPU\translate('first_name')}}" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label" >{{\App\CPU\translate('last_name')}} <span
-                                                class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text" name="l_name" class="form-control" value="{{ old('l_name') }}"  placeholder="{{\App\CPU\translate('last_name')}}" required>
-                                    </div>
-                                </div>
+<div class="modal fade" id="add-customer" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{\App\CPU\translate('add_new_customer')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('admin.pos.customer-store')}}" method="post" id="product_form">
+                    @csrf
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('first_name')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="f_name" class="form-control" value="{{ old('f_name') }}" placeholder="{{\App\CPU\translate('first_name')}}" required>
                             </div>
-                            <div class="row pl-2" >
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label" >{{\App\CPU\translate('email')}}<span
-                                            class="input-label-secondary text-danger">*</span></label>
-                                        <input type="email" name="email" class="form-control" value="{{ old('email') }}"  placeholder="{{\App\CPU\translate('Ex')}}: ex@example.com" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label" >{{\App\CPU\translate('phone')}}<span
-                                            class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text" name="phone" class="form-control" value="{{ old('phone') }}"  placeholder="{{\App\CPU\translate('phone')}}" required>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('last_name')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="l_name" class="form-control" value="{{ old('l_name') }}" placeholder="{{\App\CPU\translate('last_name')}}" required>
                             </div>
-                            <div class="row pl-2" >
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{\App\CPU\translate('country')}} <span
-                                            class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text"  name="country" class="form-control" value="{{ old('country') }}"  placeholder="{{\App\CPU\translate('country')}}" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{\App\CPU\translate('city')}} <span
-                                            class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text"  name="city" class="form-control" value="{{ old('city') }}"  placeholder="{{\App\CPU\translate('city')}}" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{\App\CPU\translate('zip_code')}} <span
-                                            class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text"  name="zip_code" class="form-control" value="{{ old('zip_code') }}"  placeholder="{{\App\CPU\translate('zip_code')}}" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label class="input-label">{{\App\CPU\translate('address')}} <span
-                                            class="input-label-secondary text-danger">*</span></label>
-                                        <input type="text"  name="address" class="form-control" value="{{ old('address') }}"  placeholder="{{\App\CPU\translate('address')}}" required>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('email')}}<span class="input-label-secondary text-danger">*</span></label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="{{\App\CPU\translate('Ex')}}: ex@example.com" required>
                             </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('phone')}}<span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="{{\App\CPU\translate('phone')}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('country')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="country" class="form-control" value="{{ old('country') }}" placeholder="{{\App\CPU\translate('country')}}" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('city')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="city" class="form-control" value="{{ old('city') }}" placeholder="{{\App\CPU\translate('city')}}" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('zip_code')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="zip_code" class="form-control" value="{{ old('zip_code') }}" placeholder="{{\App\CPU\translate('zip_code')}}" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('address')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="{{\App\CPU\translate('address')}}" required>
+                            </div>
+                        </div>
+                    </div>
 
-                        <hr>
-                        <button type="submit" id="submit_new_customer" class="btn btn--primary">{{\App\CPU\translate('submit')}}</button>
-                    </form>
-                </div>
+                    <hr>
+                    <button type="submit" id="submit_new_customer" class="btn btn--primary">{{\App\CPU\translate('submit')}}</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="add-referral_member" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{\App\CPU\translate('add_new_referral_member')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('admin.pos.referral.member.store')}}" method="post">
+                    @csrf
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('Name')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="{{\App\CPU\translate('Name')}}" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('address')}} <span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="{{\App\CPU\translate('address')}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pl-2">
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('email')}}</label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="{{\App\CPU\translate('Ex')}}: ex@example.com">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="input-label">{{\App\CPU\translate('phone')}}<span class="input-label-secondary text-danger">*</span></label>
+                                <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="{{\App\CPU\translate('phone')}}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <button type="submit" id="submit_new_referral_member" class="btn btn--primary">{{\App\CPU\translate('submit')}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
 @push('script_2')
 <script>
+    $('#referral_member').select2();
 
-        function delay(callback, ms) {
+    function delay(callback, ms) {
         var timer = 0;
         return function() {
             var context = this, args = arguments;
