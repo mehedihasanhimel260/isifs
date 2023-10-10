@@ -54,14 +54,11 @@ class SupplierManagementController extends Controller
     {
 
         $supplierslist = SupplierManagement::find($id);
-        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->paginate(10);
         $totalPurchase = $supplierTransactionInfo->sum('total_purchase');
         $totalPaid = $supplierTransactionInfo->sum('make_pay');
 
         $previousDue = $totalPurchase - $totalPaid;
-
-
-        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
         return view('admin-views.supplier-management.show', compact('supplierTransactionInfo', 'previousDue', 'supplierslist'));
     }
 
@@ -107,7 +104,7 @@ class SupplierManagementController extends Controller
         $id = $request->input('supplier_id');
 
         // Retrieve data from the database based on $supplierId
-        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->paginate(10);
         $totalPurchase = $supplierTransactionInfo->sum('total_purchase');
         $totalPaid = $supplierTransactionInfo->sum('make_pay');
         return response()->json([
@@ -118,7 +115,8 @@ class SupplierManagementController extends Controller
     public function recept(Request $request, $id)
     {
         $supplierslist = SupplierManagement::find($id);
-        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->get();
+        $supplierTransactionInfo = SupplierPurchaseInfo::where('supplier_id', $id)->paginate(10);
+
         $totalPurchase = $supplierTransactionInfo->sum('total_purchase');
         $totalPaid = $supplierTransactionInfo->sum('make_pay');
 

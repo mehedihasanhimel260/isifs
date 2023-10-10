@@ -2597,4 +2597,10 @@
   'if_thermal_printer_is_ready' => 'If thermal printer is ready',
   'Hedwig Franco' => 'Hedwig Franco',
   'Bradley Good' => 'Bradley Good',
+  'Referal management' => 'Referal management',
+  'Referal' => 'Referal',
+  'Referal List' => 'Referal List',
+  'Referral Edit' => 'Referral Edit',
+  'Referral info_Update' => 'Referral info Update',
+  'Referral info' => 'Referral info',
 );

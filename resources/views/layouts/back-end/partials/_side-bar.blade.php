@@ -761,6 +761,29 @@
                         </li>
                         @endif
                         <!--Supplier management end-->
+                        <!--Referal management-->
+                        @if(\App\CPU\Helpers::module_permission_check('user_section'))
+                        <li class="nav-item {{(Request::is('admin/customer/list') ||Request::is('admin/sellers/subscriber-list')||Request::is('admin/sellers/seller-add') || Request::is('admin/sellers/seller-list') || Request::is('admin/delivery-man*'))?'scroll-here':''}}">
+                            <small class="nav-subtitle" title="">{{\App\CPU\translate('Referal management')}}</small>
+                            <small class="tio-more-horizontal nav-subtitle-replacer"></small>
+                        </li>
+
+                        <li class="navbar-vertical-aside-has-menu {{(Request::is('admin/customer/wallet*') || Request::is('admin/customer/list') || Request::is('admin/customer/view*') || Request::is('admin/reviews*') || Request::is('admin/customer/loyalty/report'))?'active':''}}">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:" title="{{\App\CPU\translate('Referal')}}">
+                                <i class="tio-wallet nav-icon"></i>
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{\App\CPU\translate('Referal')}}</span>
+                            </a>
+                            <ul class="js-navbar-vertical-aside-submenu nav nav-sub" style="display: {{(Request::is('admin/customer/wallet*') || Request::is('admin/customer/list') || Request::is('admin/customer/view*') || Request::is('admin/reviews*') || Request::is('admin/customer/loyalty/report'))?'block':'none'}}">
+                                <li class="nav-item {{Request::is('admin/customer/list') || Request::is('admin/customer/view*')?'active':''}}">
+                                    <a class="nav-link " href="{{route('admin.referral.management.index')}}" title="{{\App\CPU\translate('Referal List')}}">
+                                        <span class="tio-circle nav-indicator-icon"></span>
+                                        <span class="text-truncate">{{\App\CPU\translate('Referal List')}} </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+                        <!--Referal management end-->
 
                         <!--System Settings-->
                         @if(\App\CPU\Helpers::module_permission_check('system_settings'))

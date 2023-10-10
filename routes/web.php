@@ -284,3 +284,10 @@ Route::post('admin/supplier/management/{id}', 'SupplierManagementController@upda
 // Route::get('/admin/product/add-new/{supplierId}', 'SupplierManagementController@getPreviousDue');
 Route::get('admin/supplier/management/update', 'SupplierManagementController@receptupdate')->name('admin.supplier.management.receptupdate')->middleware('admin');
 Route::get('/get-supplier-data', 'SupplierManagementController@getSupplierData')->name('getSupplierData')->middleware('admin');
+
+Route::get('admin/referral/management', 'ReferralMemberController@index')->name('admin.referral.management.index')->middleware('admin');
+Route::get('admin/referral/management/{id}/edit', 'ReferralMemberController@edit')->name('admin.referral.management.edit')->middleware('admin');
+
+Route::post('admin/referral/management/{id}', 'ReferralMemberController@update')->name('admin.referral.management.update')->middleware('admin');
+
+Route::get('admin/referral/management/{id}/show', 'ReferralMemberController@show')->name('admin.referral.management.show')->middleware('admin');
