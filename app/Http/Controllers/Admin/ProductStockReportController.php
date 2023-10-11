@@ -38,7 +38,15 @@ class ProductStockReportController extends Controller
             ->orderBy('current_stock', $sort)
             ->paginate(Helpers::pagination_limit())->appends($query_param);
 
-        return view('admin-views.report.product-stock', compact('products', 'seller_id', 'search', 'sort'));
+
+
+        $total_stock_balance = 0;
+
+        $product = Product::get();
+        foreach ($product as $key => $data) {
+            $total_stock_balance += $data['current_stock'] * $data['purchase_price'];
+        }
+        return view('admin-views.report.product-stock', compact('products', 'seller_id', 'search', 'sort', 'total_stock_balance'));
     }
 
     /**
@@ -77,5 +85,4 @@ class ProductStockReportController extends Controller
 
         return (new FastExcel($data))->download('total_product_stock.xlsx');
     }
-
 }
