@@ -1,4 +1,3 @@
-
 <div class="col-sm-6 col-lg-3">
     <!-- Business Analytics Card -->
     <div class="business-analytics">
@@ -31,6 +30,28 @@
     <div class="business-analytics">
         <h5 class="business-analytics__subtitle">{{\App\CPU\translate('Total Customers')}}</h5>
         <h2 class="business-analytics__title">{{ $data['customer'] }}</h2>
+        <img src="{{asset('/public/assets/back-end/img/total-customer.png')}}" class="business-analytics__img" alt="">
+    </div>
+    <!-- End Business Analytics Card -->
+</div>
+<div class="col-sm-6 col-lg-6">
+    <!-- Business Analytics Card -->
+    <div class="business-analytics">
+        <h5 class="business-analytics__subtitle">{{\App\CPU\translate('Total Stock ')}}</h5>
+        <h2 class="business-analytics__title">{{ \App\Model\Product::sum('current_stock') }}</h2>
+        <img src="{{asset('/public/assets/back-end/img/total-customer.png')}}" class="business-analytics__img" alt="">
+    </div>
+    <!-- End Business Analytics Card -->
+</div>
+<div class="col-sm-6 col-lg-6">
+    <!-- Business Analytics Card -->
+    <div class="business-analytics">
+        @php
+        $total_stock_balance = \App\Model\Product::sum(\DB::raw('current_stock * purchase_price'));
+        @endphp
+
+        <h5 class="business-analytics__subtitle">{{\App\CPU\translate('Total Purchase Amount')}}</h5>
+        <h2 class="business-analytics__title">{{ $total_stock_balance}}</h2>
         <img src="{{asset('/public/assets/back-end/img/total-customer.png')}}" class="business-analytics__img" alt="">
     </div>
     <!-- End Business Analytics Card -->
