@@ -152,7 +152,7 @@
 
 
                     <div class="d-flex justify-content-end gap-10 flex-wrap align-items-center">
-                        <button type="button" class="btn btn-danger px-4" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn btn-danger px-4" data-dismiss="modal" id="close" aria-label="Close">
                             {{\App\CPU\translate('close')}}
                         </button>
                         <button class="btn btn--primary" class="btn btn--primary px-4" type="submit">{{\App\CPU\translate('submit')}}</button>
@@ -166,6 +166,12 @@
 
 @push('script')
 <script>
+    document.getElementById("close").addEventListener("click", function() {
+        $('#update-quantity').modal('hide');
+        setTimeout(function() {
+            location.reload();
+        }, 500);
+    });
     function update_quantity(val) {
             $.get({
                 url: '{{url('/')}}/admin/product/get-variations?id='+val,

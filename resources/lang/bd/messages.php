@@ -2614,4 +2614,6 @@
   'Cheryl Deleon' => 'Cheryl Deleon',
   'Blaze Farley' => 'Blaze Farley',
   'Purchase Price' => 'Purchase Price',
+  'Today Total Sale' => 'Today Total Sale',
+  'Nishant Sharma' => 'Nishant Sharma',
 );

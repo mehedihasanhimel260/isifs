@@ -460,6 +460,13 @@ class ProductController extends BaseController
 
     public function update_quantity(Request $request)
     {
+        if ($request->input('supplier_id') != 0) {
+            SupplierPurchaseInfo::create([
+                'supplier_id' => $request->input('supplier_id'),
+                'total_purchase' => $request->input('total_purchase'),
+                'make_pay' => $request->input('make_pay'),
+            ]);
+        }
         $variations = [];
         $stock_count = $request['current_stock'];
         if ($request->has('type')) {
@@ -1006,7 +1013,7 @@ class ProductController extends BaseController
             return back();
         }
         $product = Product::findOrFail($id);
-        $limit =  $request->limit ?? 4;
+        $limit = $request->limit ?? $product->current_stock;
         return view('admin-views.product.barcode', compact('product', 'limit'));
     }
 }

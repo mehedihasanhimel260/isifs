@@ -41,7 +41,7 @@
                 <div class="col-md-6 form-group physical_product_show">
                     <label class="title-color">{{ \App\CPU\translate('Suplier Name') }}</label>
                     <select class="js-example-basic-multiple form-control" name="supplier_id" onchange="valuesOfAll(this.value)">
-                        <option selected> --- select option ---</option>
+                        <option value="" selected> --- select option ---</option>
                         @foreach (\App\Model\SupplierManagement::get() as $x)
                         <option value="{{ $x->id }}">{{ $x->name }}</option>
                         @endforeach
@@ -52,27 +52,27 @@
                     <div class="row">
                         <label class="title-color">
                             {{ \App\CPU\translate('Total Amount') }}</label>
-                        <input type="number" min="1" value="0" id="totalInput" step="1" readonly name="total_purchase" class="form-control" required>
+                        <input type="number" value="0" id="totalInput" readonly name="total_purchase" class="form-control">
                     </div>
                     <div class="row">
                         <label class="title-color">
                             {{ \App\CPU\translate('Previous Due') }}</label>
-                        <input type="number" min="1" value="0" id="previousDue" step="1" readonly class="form-control" required>
+                        <input type="number" value="0" id="previousDue" readonly class="form-control">
                     </div>
                     <div class="row">
                         <label class="title-color">
                             {{ \App\CPU\translate('Payable') }}</label>
-                        <input type="number" min="1" value="0" id="payable" step="1" readonly class="form-control" required>
+                        <input type="number" value="0" id="payable" readonly class="form-control">
                     </div>
                     <div class="row">
                         <label class="title-color">
                             {{ \App\CPU\translate('Now Pay') }}</label>
-                        <input type="number" min="1" id="nowpay" value="0" step="1" name="make_pay" class="form-control" required>
+                        <input type="number" id="nowpay" value="0" name="make_pay" class="form-control">
                     </div>
                     <div class="row">
                         <label class="title-color">
                             {{ \App\CPU\translate('current due') }}</label>
-                        <input type="number" min="1" id="currentDue" value="0" step="1" readonly class="form-control" required>
+                        <input type="number" id="currentDue" value="0" readonly class="form-control">
                     </div>
                 </div>
             </div>
